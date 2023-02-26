@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../screen/picQuote.dart';
 
 List<Map<String, dynamic>> list = [];
+List<Map<String, dynamic>> likeQuote = [];
 
 List<Map<String, dynamic>> uniqueList = [
   {
@@ -49,3 +51,5 @@ List<Map<String, dynamic>> category = [
     'route': "Categories",
   },
 ];
+int counter = 0;
+ScreenshotController screenshotController = ScreenshotController();
