@@ -51,10 +51,15 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               width: w / 20,
             ),
-            const Icon(
-              CupertinoIcons.heart_fill,
-              color: Colors.red,
-              size: 30,
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushNamed("Like");
+              },
+              child: const Icon(
+                CupertinoIcons.heart_fill,
+                color: Colors.red,
+                size: 30,
+              ),
             ),
           ],
         ),

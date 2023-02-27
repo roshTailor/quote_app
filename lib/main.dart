@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quote_app/screen/HomePage.dart';
 import 'package:quote_app/screen/category.dart';
+import 'package:quote_app/screen/like.dart';
 import 'package:quote_app/screen/picQuote.dart';
 import 'package:quote_app/utils/global.dart';
 import 'package:sqflite/sqflite.dart';
@@ -54,6 +55,7 @@ void main() async {
         '/': (context) => const HomePage(),
         'PicQuote': (context) => const PicQuote(),
         'Category': (context) => const Category(),
+        'Like':(context) => const Like(),
       },
     ),
   );

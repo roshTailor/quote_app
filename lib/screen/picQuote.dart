@@ -125,15 +125,15 @@ class _PicQuoteState extends State<PicQuote> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              e['image'] = list[counter]['image'];
                               if (counter < list.length) {
+                                e['bgImage'] = list[counter]['image'];
                                 counter++;
                               }
                             });
                           },
                           child: Icon(
                             Icons.change_circle_rounded,
-                            color: Colors.red,
+                            color: Colors.blue,
                           )),
                         GestureDetector(
                           onTap:(){
@@ -143,8 +143,8 @@ class _PicQuoteState extends State<PicQuote> {
                             });
                           },
                           child: const Icon(
-                            Icons.star_rate_rounded,
-                            color: Colors.blue,
+                            CupertinoIcons.heart_fill,
+                            color: Colors.red,
                             size: 30,
                           ),
                         ),
@@ -287,22 +287,100 @@ class _PicQuoteState extends State<PicQuote> {
                     child: Row(
                       mainAxisAlignment:
                       MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(
-                          Icons.file_download,
-                          color: Colors.green,
-                          size: 30,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (counter < list.length) {
+                                  e['bgImage'] = list[counter]['image'];
+                                  counter++;
+                                }
+                              });
+                            },
+                            child: Icon(
+                              Icons.change_circle_rounded,
+                              color: Colors.blue,
+                            )),
+                        GestureDetector(
+                          onTap:(){
+                            setState(() {
+                              likeQuote.add(e);
+                              print(likeQuote);
+                            });
+                          },
+                          child: const Icon(
+                            CupertinoIcons.heart_fill,
+                            color: Colors.red,
+                            size: 30,
+                          ),
                         ),
-                        Icon(
-                          Icons.star_rate_rounded,
-                          color: Colors.blue,
-                          size: 30,
+                        GestureDetector(
+                          onTap: () {
+                            FlutterClipboard.copy(
+                              e['quote'].toString(),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copy")));
+                          },
+                          child: const Icon(
+                            Icons.copy_rounded,
+                            color: Colors.blueAccent,
+                          ),
                         ),
-                        Icon(
-                          Icons.share,
-                          color: Colors.red,
-                          size: 25,
+
+                        GestureDetector(
+                          onTap: () async {
+                            final byte = await screenshotController.captureFromWidget(Material(
+                              child: Stack(alignment: Alignment.center, children: [
+                                Container(
+                                  height: h,
+                                  width: w,
+                                  decoration: BoxDecoration(image: DecorationImage(image: NetworkImage("${e['image']}"), fit: BoxFit.cover)),
+                                  child: Center(
+                                    child: Text(
+                                      "${e['quote']}",
+                                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ));
+                            final temp = await getTemporaryDirectory();
+                            final path = '${temp.path}/image.jpg';
+                            File(path).writeAsBytesSync(byte);
+                            await Share.shareFiles([path]);
+                          },
+                          child: const Icon(
+                            Icons.share,
+                            color: Colors.red,
+                          ),
                         ),
+                        GestureDetector(
+                          onTap: () async {
+                            Uint8List? imageBytes = await screenshotController.captureFromWidget(
+                              Stack(alignment: Alignment.center, children: [
+                                Container(
+                                  height: h,
+                                  width: w,
+                                  decoration: BoxDecoration(image: DecorationImage(image: NetworkImage("${e['image']}"), fit: BoxFit.cover)),
+                                  child: Center(
+                                    child: Text(
+                                      "${e['quote']}",
+                                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            );
+                            saveImage(imageBytes);
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Download..")));
+                          },
+                          child: const Icon(
+                            Icons.download_rounded,
+                            color: Colors.green,
+                          ),
+                        ),
+
                       ],
                     ),
                   )
@@ -375,22 +453,100 @@ class _PicQuoteState extends State<PicQuote> {
                     child: Row(
                       mainAxisAlignment:
                       MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(
-                          Icons.file_download,
-                          color: Colors.green,
-                          size: 30,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (counter < list.length) {
+                                  e['bgImage'] = list[counter]['image'];
+                                  counter++;
+                                }
+                              });
+                            },
+                            child: Icon(
+                              Icons.change_circle_rounded,
+                              color: Colors.blue,
+                            )),
+                        GestureDetector(
+                          onTap:(){
+                            setState(() {
+                              likeQuote.add(e);
+                              print(likeQuote);
+                            });
+                          },
+                          child: const Icon(
+                            CupertinoIcons.heart_fill,
+                            color: Colors.red,
+                            size: 30,
+                          ),
                         ),
-                        Icon(
-                          Icons.star_rate_rounded,
-                          color: Colors.blue,
-                          size: 30,
+                        GestureDetector(
+                          onTap: () {
+                            FlutterClipboard.copy(
+                              e['quote'].toString(),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copy")));
+                          },
+                          child: const Icon(
+                            Icons.copy_rounded,
+                            color: Colors.blueAccent,
+                          ),
                         ),
-                        Icon(
-                          Icons.share,
-                          color: Colors.red,
-                          size: 25,
+
+                        GestureDetector(
+                          onTap: () async {
+                            final byte = await screenshotController.captureFromWidget(Material(
+                              child: Stack(alignment: Alignment.center, children: [
+                                Container(
+                                  height: h,
+                                  width: w,
+                                  decoration: BoxDecoration(image: DecorationImage(image: NetworkImage("${e['image']}"), fit: BoxFit.cover)),
+                                  child: Center(
+                                    child: Text(
+                                      "${e['quote']}",
+                                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ));
+                            final temp = await getTemporaryDirectory();
+                            final path = '${temp.path}/image.jpg';
+                            File(path).writeAsBytesSync(byte);
+                            await Share.shareFiles([path]);
+                          },
+                          child: const Icon(
+                            Icons.share,
+                            color: Colors.red,
+                          ),
                         ),
+                        GestureDetector(
+                          onTap: () async {
+                            Uint8List? imageBytes = await screenshotController.captureFromWidget(
+                              Stack(alignment: Alignment.center, children: [
+                                Container(
+                                  height: h,
+                                  width: w,
+                                  decoration: BoxDecoration(image: DecorationImage(image: NetworkImage("${e['image']}"), fit: BoxFit.cover)),
+                                  child: Center(
+                                    child: Text(
+                                      "${e['quote']}",
+                                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            );
+                            saveImage(imageBytes);
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Download..")));
+                          },
+                          child: const Icon(
+                            Icons.download_rounded,
+                            color: Colors.green,
+                          ),
+                        ),
+
                       ],
                     ),
                   )

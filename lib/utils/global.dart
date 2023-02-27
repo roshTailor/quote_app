@@ -51,5 +51,5 @@ List<Map<String, dynamic>> category = [
     'route': "Categories",
   },
 ];
-int counter = 0;
+int counter = 1;
 ScreenshotController screenshotController = ScreenshotController();
